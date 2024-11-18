@@ -9,6 +9,11 @@
 from Animal import Animal
 from Hyena import Hyena
 from Lion import Lion
+from bear import Bear
+
+
+
+
 
 from _datetime import date
 
@@ -53,9 +58,9 @@ def process_one_line(one_line):
     origin_01 = ""
     origin_02 = ""
 
-    print(one_line)
+    #print(one_line)
     groups_of_words = one_line.strip().split(",")
-    print(groups_of_words)
+    #print(groups_of_words)
     single_words = groups_of_words[0].strip().split(" ")
     age_in_years = single_words[0]
     a_sex = single_words[3]
@@ -89,9 +94,19 @@ def process_one_line(one_line):
         # add to the lion list
         list_of_lions.append(my_lion)
 
+    if "bear" in a_species:
+        #Create Bear object
+        my_bear = Bear("aName","anID",birth_day,color,a_sex,weight,from_zoo,current_date)
+        # fill in name and ID
+        my_bear.name = Bear.get_bear_name(my_bear)
+        my_bear.animal_id = "Be" + str(Bear.numOfBears).zfill(2)
+        # add to bear list
+        list_of_bears.append(my_bear)
+
+
 # Open arrivingAnimals.txt and read it one line at a time
 # Open the file in read mode
-file_path = r"C:\2023spring\pythonRoot\dataFiles\arrivingAnimals.txt"
+file_path = r"arrivingAnimals.txt"
 with open(file_path, "r") as file:
     # Iterate through the file line by line
     for line in file:
@@ -105,6 +120,9 @@ print(f"\n\nNumber of hyenas created: {Hyena.numOfHyenas}")
 
 # Output the static variable numOfLions
 print(f"\n\nNumber of lions created: {Lion.numOfLions}")
+
+# Output the static variable numOfBears
+print(f"\n\nNumber of bears created: {Bear.numOfBears}")
 
 # output the animals
 # this is zoo population
@@ -124,3 +142,10 @@ for lion in list_of_lions:
     print(lion.animal_id + ", " + lion.name + "; birthdate: " + str(lion.birth_date) + "; " + lion.color +
           "; " + lion.sex + "; " + lion.weight + "; " + lion.originating_zoo + "; arrived: " +
           str(lion.date_arrival))
+print()
+print("Bear Habitat:")
+print()
+for bear in list_of_bears:
+    print(bear.animal_id + ", " + bear.name + "; birthdate: " + str(bear.birth_date) + "; " + bear.color +
+          "; " + bear.sex + "; " + bear.weight + "; " + bear.originating_zoo + "; arrived: " +
+          str(bear.date_arrival))
