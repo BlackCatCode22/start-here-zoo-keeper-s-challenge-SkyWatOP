@@ -10,6 +10,8 @@ from Animal import Animal
 from Hyena import Hyena
 from Lion import Lion
 from bear import Bear
+from Tiger import Tiger
+
 
 
 
@@ -27,7 +29,7 @@ list_of_bears = []
 current_date = date.today()
 current_year = current_date.year
 
-def calc_birth_date(the_season, the_years):
+def gen_birth_date(the_season, the_years):
     year_of_birthday = int(current_year) - int(the_years)
 
     the_birth_day = ""
@@ -45,7 +47,6 @@ def calc_birth_date(the_season, the_years):
         the_birth_day = str(year_of_birthday) + "-01-01"
 
     return the_birth_day
-
 
 def process_one_line(one_line):
     # Create variables to help parse arrivingAnimals.txt
@@ -74,7 +75,7 @@ def process_one_line(one_line):
 
     from_zoo = origin_01 + ", " + origin_02
 
-    birth_day = calc_birth_date(season, age_in_years)
+    birth_day = gen_birth_date(season, age_in_years)
 
     if "hyena" in a_species:
         # Create a hyena object.
@@ -90,7 +91,7 @@ def process_one_line(one_line):
         my_lion = Lion("aName", "anID", birth_day, color, a_sex, weight, from_zoo, current_date)
         # fill in name and ID
         my_lion.name = Lion.get_lion_name(my_lion)
-        my_lion.animal_id = "Li" + str(Hyena.numOfHyenas).zfill(2)
+        my_lion.animal_id = "Li" + str(Lion.numOfLions).zfill(2)
         # add to the lion list
         list_of_lions.append(my_lion)
 
@@ -102,6 +103,16 @@ def process_one_line(one_line):
         my_bear.animal_id = "Be" + str(Bear.numOfBears).zfill(2)
         # add to bear list
         list_of_bears.append(my_bear)
+
+    if "tiger" in a_species:
+        # create tiger object
+        my_tiger = Tiger("aName","anID",birth_day,color,a_sex,weight,from_zoo,current_date)
+        # fill in name and ID
+        my_tiger.name = Tiger.get_tiger_name(my_tiger)
+        my_tiger.animal_id = "Ti" + str(Tiger.numOfTigers).zfill(2)
+        # add to tiger list
+        list_of_tigers.append(my_tiger)
+
 
 
 # Open arrivingAnimals.txt and read it one line at a time
@@ -124,28 +135,40 @@ print(f"\n\nNumber of lions created: {Lion.numOfLions}")
 # Output the static variable numOfBears
 print(f"\n\nNumber of bears created: {Bear.numOfBears}")
 
+# Output the static variable numOfTigers
+print(f"\n\nNumber of tigers created: {Tiger.numOfTigers}")
+
 # output the animals
+# use with command to write to the zooPopulation.txt
 # this is zoo population
-print()
-print("Zookeeper's Challenge Zoo Population")
-print()
-print("Hyena Habitat:")
-print()
-for hyena in list_of_hyenas:
-    print(hyena.animal_id + ", " + hyena.name + "; birthdate: " + str(hyena.birth_date) + "; " + hyena.color +
-          "; " + hyena.sex + "; " + hyena.weight + "; " + hyena.originating_zoo + "; arrived: " +
-          str(hyena.date_arrival))
-print()
-print("Lion Habitat:")
-print()
-for lion in list_of_lions:
-    print(lion.animal_id + ", " + lion.name + "; birthdate: " + str(lion.birth_date) + "; " + lion.color +
-          "; " + lion.sex + "; " + lion.weight + "; " + lion.originating_zoo + "; arrived: " +
-          str(lion.date_arrival))
-print()
-print("Bear Habitat:")
-print()
-for bear in list_of_bears:
-    print(bear.animal_id + ", " + bear.name + "; birthdate: " + str(bear.birth_date) + "; " + bear.color +
-          "; " + bear.sex + "; " + bear.weight + "; " + bear.originating_zoo + "; arrived: " +
-          str(bear.date_arrival))
+with open("zooPopulation.txt","w") as file:
+    file.write("ZooKeeper's Zoo Population Report \n\n")
+
+    file.write("Hyena Habitat:\n")
+    for hyena in list_of_hyenas:
+        file.write(hyena.animal_id + ", " + hyena.name + "; birthdate: " + str(
+            hyena.birth_date) + "; " + hyena.color + "; " + hyena.sex + "; " + hyena.weight + "; " + hyena.originating_zoo + "; arrived: " + str(
+            hyena.date_arrival))
+        file.write("\n")
+
+    file.write("\nLion Habitat:\n")
+    for lion in list_of_lions:
+        file.write(lion.animal_id + ", " + lion.name + "; birthdate: " + str(
+            lion.birth_date) + "; " + lion.color + "; " + lion.sex + "; " + lion.weight + "; " + lion.originating_zoo + "; arrived: " + str(
+            lion.date_arrival))
+        file.write("\n")
+
+    file.write("\nBear Habitat:\n")
+    for bear in list_of_bears:
+        file.write(bear.animal_id + ", " + bear.name + "; birthdate: " + str(
+            bear.birth_date) + "; " + bear.color + "; " + bear.sex + "; " + bear.weight + "; " + bear.originating_zoo + "; arrived: " + str(
+            bear.date_arrival))
+        file.write("\n")
+
+    file.write("\nTiger Habitat:\n")
+    for tiger in list_of_tigers:
+        file.write(tiger.animal_id + ", " + tiger.name + "; birthdate: " + str(
+            tiger.birth_date) + "; " + tiger.color + "; " + tiger.sex + "; " + tiger.weight + "; " + tiger.originating_zoo + "; arrived: " + str(
+            tiger.date_arrival))
+        file.write("\n")
+
